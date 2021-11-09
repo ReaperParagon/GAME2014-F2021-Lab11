@@ -11,6 +11,7 @@ public class PlayerBehaviour : MonoBehaviour
     public Transform groundOrigin;
     public float groundRadius;
     public LayerMask groundLayerMask;
+    public float airControlFactor;
 
     [Header("Animation")]
     public PlayerAnimState state;
@@ -34,14 +35,17 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Move()
     {
+        float x = Input.GetAxisRaw("Horizontal"); ;
+        float y;
+        float jump;
+
         if (isGrounded)
         {
             //float deltaTime = Time.deltaTime;
 
             // Keyboard Input
-            float x = Input.GetAxisRaw("Horizontal");
-            float y = Input.GetAxisRaw("Vertical");
-            float jump = Input.GetAxisRaw("Jump");
+            y = Input.GetAxisRaw("Vertical");
+            jump = Input.GetAxisRaw("Jump");
 
             // Check for Flip
 
@@ -72,15 +76,23 @@ public class PlayerBehaviour : MonoBehaviour
 
             float mass = rigidbody.mass * rigidbody.gravityScale;
 
-
             rigidbody.AddForce(new Vector2(horizontalMoveForce, jumpMoveForce) * mass);
             rigidbody.velocity *= 0.99f; // scaling / stopping hack
         }
-        else
+        else   // In the air
         {
             // Player Jump / Fall
             animatorController.SetInteger("AnimationState", (int)PlayerAnimState.JUMP);
             state = PlayerAnimState.JUMP;
+
+            if (x != 0)
+            {
+                x = FlipAnimation(x);
+                float horizontalMoveForce = x * horizontalForce * airControlFactor;    // Air Control
+                float mass = rigidbody.mass * rigidbody.gravityScale;
+
+                rigidbody.AddForce(new Vector2(horizontalMoveForce, 0.0f) * mass);
+            }
         }
 
     }
@@ -110,4 +122,20 @@ public class PlayerBehaviour : MonoBehaviour
         Gizmos.DrawWireSphere(groundOrigin.position, groundRadius);
     }
 
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            transform.SetParent(collision.transform);   // Set parent
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            transform.SetParent(null);  // Unset parent
+        }
+    }
 }
