@@ -37,7 +37,25 @@ public class PlayerBehaviour : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal"); ;
         float y;
-        float jump;
+        float jump = Input.GetAxisRaw("Jump");
+
+        // Touch Input
+        Vector2 worldTouch = Vector2.zero;
+        foreach (var touch in Input.touches)
+        {
+            worldTouch = Camera.main.ScreenToWorldPoint(touch.position);
+        }
+
+        // Check if touch on the right side / left side and top of the screen for movement right / left and jumping
+        if (worldTouch != Vector2.zero)
+        {
+            if (worldTouch.x > transform.position.x)
+                x = 1;
+            if (worldTouch.x < transform.position.x)
+                x = -1;
+            if (worldTouch.y > transform.position.y)
+                jump = 1;
+        }
 
         if (isGrounded)
         {
@@ -45,10 +63,8 @@ public class PlayerBehaviour : MonoBehaviour
 
             // Keyboard Input
             y = Input.GetAxisRaw("Vertical");
-            jump = Input.GetAxisRaw("Jump");
 
             // Check for Flip
-
             if (x != 0)
             {
                 x = FlipAnimation(x);
@@ -64,13 +80,6 @@ public class PlayerBehaviour : MonoBehaviour
                 state = PlayerAnimState.IDLE;
             }
             
-            // Touch Input
-            Vector2 worldTouch = new Vector2();
-            foreach (var touch in Input.touches)
-            {
-                worldTouch = Camera.main.ScreenToWorldPoint(touch.position);
-            }
-
             float horizontalMoveForce = x * horizontalForce;// * deltaTime;
             float jumpMoveForce = jump * verticalForce; // * deltaTime;
 
