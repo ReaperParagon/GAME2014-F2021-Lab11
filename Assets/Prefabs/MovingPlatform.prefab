@@ -86,9 +86,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be4d8752251bd843aa7c9cca26eaa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  direction: 1
   speed: 2
   distance: 4
+  distanceOffset: 0.05
   isLooping: 1
 --- !u!1 &2221163305509905686
 GameObject:
