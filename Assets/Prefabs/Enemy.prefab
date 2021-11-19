@@ -73,8 +73,10 @@ GameObject:
   - component: {fileID: 8399241940143588908}
   - component: {fileID: 8399241940143588897}
   - component: {fileID: 8399241940143588896}
-  - component: {fileID: 8399241940143588899}
   - component: {fileID: 4117132027851420435}
+  - component: {fileID: 6516323196203641323}
+  - component: {fileID: 6406196066290824218}
+  - component: {fileID: 8399241940143588899}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -216,28 +218,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &8399241940143588899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8399241940143588909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b812aa7a85f25b542988b0764dfec667, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runForce: 10
-  lookAheadPoint: {fileID: 9021110054048584990}
-  lookInFrontPoint: {fileID: 4721624801761916668}
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  wallLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  isGroundAhead: 0
 --- !u!68 &4117132027851420435
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -261,3 +241,83 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!60 &6516323196203641323
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399241940143588909}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.25, y: 1.75}
+    newSize: {x: 2.25, y: 1.75}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -14, y: 1.5}
+      - {x: -14, y: -0.75}
+      - {x: -1.1, y: 0}
+--- !u!114 &6406196066290824218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399241940143588909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee2c66eec5aa199439cbabaed6b54e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collidesWith: {fileID: 0}
+  contactFilter:
+    useTriggers: 1
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 448
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  colliderList: []
+--- !u!114 &8399241940143588899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399241940143588909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b812aa7a85f25b542988b0764dfec667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyLOS: {fileID: 0}
+  runForce: 10
+  lookAheadPoint: {fileID: 9021110054048584990}
+  lookInFrontPoint: {fileID: 4721624801761916668}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  isGroundAhead: 0
+  animatorController: {fileID: 0}

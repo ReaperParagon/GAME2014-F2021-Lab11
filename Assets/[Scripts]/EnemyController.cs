@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Player Detection")]
+    public LOS enemyLOS;
+
     [Header("Movement")]
     public float runForce;
     public Transform lookAheadPoint;
@@ -12,12 +15,17 @@ public class EnemyController : MonoBehaviour
     public LayerMask wallLayerMask;
     public bool isGroundAhead;
 
+    [Header("Animation")]
+    public Animator animatorController;
+
     private Rigidbody2D rigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        enemyLOS = GetComponent<LOS>();
+        animatorController = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -25,7 +33,49 @@ public class EnemyController : MonoBehaviour
     {
         LookAhead();
         LookInFront();
-        MoveEnemy();
+
+        if (!HasLOS())
+        {
+            animatorController.enabled = true;
+            animatorController.Play("Run");
+            MoveEnemy();
+        }
+        else
+        {
+            animatorController.enabled = false;
+        }
+
+    }
+
+    private bool HasLOS()
+    {
+        if (enemyLOS.colliderList.Count > 0)
+        {
+            // Case 1: enemy polygonCollider2D collides with player and player is at the top of the list
+            if ((enemyLOS.collidesWith.gameObject.CompareTag("Player")) && 
+                (enemyLOS.colliderList[0].gameObject.CompareTag("Player")))
+            {
+                return true;
+            }
+            else
+            // Case 2: player is in the Collider List and we can draw a ray to the player
+            {
+                foreach (var collider in enemyLOS.colliderList)
+                {
+                    if (collider.gameObject.CompareTag("Player"))
+                    {
+                        var hit = Physics2D.Raycast(lookInFrontPoint.position, Vector3.Normalize(collider.transform.position - lookInFrontPoint.position), 5.0f, enemyLOS.contactFilter.layerMask);
+
+                        if (hit && hit.collider.gameObject.CompareTag("Player"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     private void LookAhead()

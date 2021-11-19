@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 6752786977127398518}
   - component: {fileID: 6752786977127398519}
   - component: {fileID: 6752786977127398515}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -186,6 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff54edef48501b4fa36cd32af07423c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joystick: {fileID: 0}
+  sensitivity: 0.5
   horizontalForce: 10
   verticalForce: 40
   isGrounded: 0
