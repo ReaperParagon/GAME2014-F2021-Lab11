@@ -4997,7 +4997,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5091,3 +5091,9 @@ MonoBehaviour:
   state: 0
   dustTrail: {fileID: 0}
   dustTrailColour: {r: 0.8705883, g: 0.6039216, b: 0.37647063, a: 1}
+  virtualCamera: {fileID: 0}
+  perlin: {fileID: 0}
+  shakeIntensity: 0
+  shakeDuration: 0
+  shakeTimer: 0
+  isCameraShaking: 0
